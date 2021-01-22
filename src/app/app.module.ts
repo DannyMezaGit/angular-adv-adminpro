@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
     AppComponent,
     NotpagefoundComponent,
 
+
   ],
   imports: [
     BrowserModule,
