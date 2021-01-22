@@ -9,6 +9,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class IncrementadorComponent implements OnInit {
 
   @Input() progreso: number = 50;
+  @Input() bntClass: string = 'btn-primary';
+
 
   @Output() valorSalida: EventEmitter<number> = new EventEmitter();
 
@@ -28,6 +30,7 @@ export class IncrementadorComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.bntClass = `btn ${this.bntClass}`
   }
 
 }
