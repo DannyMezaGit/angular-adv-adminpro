@@ -4,7 +4,9 @@
             <div class="card-body">
                 <h4 class="card-title">Striped Progress bar</h4>
                 <div class="progress m-t-20">
-                    <div class="progress-bar bg-info progress-bar-striped active" style="width: 85%; height:10px;"
+                    <div class="progress-bar bg-info progress-bar-striped active" 
+                        style="height:10px;"
+                        [style.width]="getPorcentaje()"
                         role="progressbar"> <span class="sr-only">85% Complete (success)</span> </div>
                 </div>
             </div>
@@ -17,14 +19,24 @@
             <div class="card-body">
                 <div class="input-group">
                     <span class="input-group-btn">
-                        <button class="btn btn-danger" type="button">
-                            <a class="fa fa-plus"></a>
+                        <button 
+                            class="btn btn-danger"
+                            (click) = "cambiarValor(-5)"
+                            type="button">
+                            <a class="fa fa-minus"></a>
                         </button>
                     </span>
-                    <input type="text" class="form-control" placeholder="Product name">
+                    <input 
+                        [(ngModel)]="progreso"
+                        type="number"
+                        class="form-control"
+                        placeholder="Progress">
                     <span class="input-group-btn">
-                        <button class="btn btn-success" type="button">
-                            <a class="fa fa-minus"></a>
+                        <button 
+                            class="btn btn-success" 
+                            (click) = "cambiarValor(+5)"
+                            type="button">
+                            <a class="fa fa-plus"></a>
                         </button>
                     </span>
                 </div>
@@ -34,7 +46,7 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                2
+                {{getPorcentaje()}}
             </div>
         </div>
     </div>
