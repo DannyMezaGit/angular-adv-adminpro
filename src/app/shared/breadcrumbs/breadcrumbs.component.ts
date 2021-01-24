@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
@@ -8,31 +9,34 @@ import { filter, map } from 'rxjs/operators';
   styles: [
   ]
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent implements OnDestroy {
 
   titulo: string;
-  
+  tituloSubs$: Subscription;
 
   constructor(private router: Router) {
 
-    this.getArgumentosRuta();
-
-  }
-
-  getArgumentosRuta() {
-    this.router.events.pipe(
-
-      filter(event => event instanceof ActivationEnd),
-      filter((event: ActivationEnd) => event.snapshot.firstChild === null), // Este fitro se hará al resultado del foltro anterior definido
-      map((event: ActivationEnd) => event.snapshot.data),
-
-    ).subscribe(({ titulo }) => {// destructuramos data.titulo entre llaves sólo pedimos titulo
+    this.tituloSubs$ = this.getArgumentosRuta()
+      .subscribe(({ titulo }) => {// destructuramos data.titulo entre llaves sólo pedimos titulo
       this.titulo = titulo;
       document.title = `AdminPro - ${titulo}`;
     });
+
+  }
+  ngOnDestroy(): void {
+    this.tituloSubs$.unsubscribe();
   }
 
-  ngOnInit(): void {
+  getArgumentosRuta() {
+
+    return this.router.events
+
+      .pipe(
+        filter(event => event instanceof ActivationEnd),
+        filter((event: ActivationEnd) => event.snapshot.firstChild === null), // Este fitro se hará al resultado del foltro anterior definido
+        map((event: ActivationEnd) => event.snapshot.data),
+
+      );
   }
 
 }
